@@ -16,10 +16,11 @@ class LoadingMiddleware implements Service {
         try {
             const result = await this.next.getWeather(city);
             this.dispatch(stopLoading('getWeather'));
+            console.log('loading', result);
             return result;
         } catch (e) {
             this.dispatch(stopLoading('getWeather'));
-            throw e;
+            console.log(e);
         }
     }
 }

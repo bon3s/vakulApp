@@ -13,12 +13,12 @@ export interface Service {
 
 export class WeatherReply {
     public static fromJSON(maybe: any): WeatherReply {
-        if (!Array.isArray(maybe)) {
-            throw new Error('WeatherReply should be an array');
-        }
+        // if (!Array.isArray(maybe)) {
+        //     throw new Error('WeatherReply should be an array');
+        // }
         const weatherArray: WeatherType[] = [];
-        for (const maybeBulkyType of maybe) {
-            weatherArray.push(WeatherType.fromJSON(maybeBulkyType));
+        for (const maybeWeather of maybe) {
+            weatherArray.push(WeatherType.fromJSON(maybeWeather));
         }
         return new WeatherReply(weatherArray);
     }
@@ -28,7 +28,7 @@ export class WeatherReply {
     }
 }
 
-const url = new URL(config.BACKEND_SCHEME, config.BACKEND);
+const url = new URL(config.BACKEND_SCHEME, config.BACKEND, config.API_KEY);
 
 const rest: Service = new REST(client, url);
 const cache: Service = new CacheMiddleware(rest, store.dispatch);

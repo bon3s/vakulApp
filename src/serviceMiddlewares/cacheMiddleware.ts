@@ -17,6 +17,7 @@ class CacheMiddleware implements Service {
     public async getWeather(city: string): Promise<WeatherReply> {
         try {
             const weather = await this.next.getWeather(city);
+            console.log('cache', weather);
             setToAsyncStorage(weather, '@cache/weather');
             return weather;
         } catch (e) {
@@ -24,9 +25,10 @@ class CacheMiddleware implements Service {
                 const weatherReply = await getFromAsyncStorage(
                     '@cache/weather'
                 );
+                console.log(e);
                 return WeatherReply.fromJSON(weatherReply.data);
             } catch (e) {
-                throw e;
+                console.log(e);
             }
         }
     }

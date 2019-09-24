@@ -4,11 +4,16 @@ import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 export class URL {
     private url: string;
-    constructor(scheme: string, backend: string) {
+    private apiKey: string;
+    constructor(scheme: string, backend: string, apikey: string) {
         this.url = scheme + '://' + backend;
+        this.apiKey = apikey;
     }
     public path(): string {
         return this.url;
+    }
+    public apiAccess(): string {
+        return this.apiKey;
     }
 }
 
@@ -34,7 +39,7 @@ export class ServiceError extends Error {
         this.type = type;
     }
     public toString(): string {
-        return `ServiceError(endpoint=${this.endpoint}, type=${this.type}, message=${this.message})`;
+        return 'ServiceError(endpoint=${this.endpoint}, type=${this.type}, message=${this.message})';
     }
 
     public toJSON(): string {
@@ -55,7 +60,7 @@ class REST implements Service {
     public async getWeather(city: string): Promise<WeatherReply> {
         const res = await this.request(this.getWeather, {
             method: 'POST',
-            url: this.url.path() + city,
+            url: this.url.path() + city + '&APPID=' + this.url.apiAccess(),
             data: {},
         });
         return WeatherReply.fromJSON(res.data.result.weather);

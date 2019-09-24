@@ -2222,9 +2222,9 @@ encoding@^0.1.11:
     iconv-lite "~0.4.13"
 
 end-of-stream@^1.1.0:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.1.tgz#ed29634d19baba463b6ce6b80a37213eab71ec43"
-  integrity sha512-1MkrZNvWTKCaigbn+W15elq2BB/L22nqrSY5DKlo3X6+vclJm8Bb5djXJBmEX6fS3+zCh/F4VBK5Z2KxJt4s2Q==
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.2.tgz#080bf028edce8312b665ff18ea03cae0c3ac0ecb"
+  integrity sha512-gUSUszrsxlDnUbUwEI9Oygyrk4ZEWtVaHQc+uZHphVeNxl+qeqMV/jDWoTkjN1RmGlZ5QWAP7o458p/JMlikQg==
   dependencies:
     once "^1.4.0"
 
@@ -3052,9 +3052,9 @@ getpass@^0.1.1:
     assert-plus "^1.0.0"
 
 glob-parent@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.0.0.tgz#1dc99f0f39b006d3e92c2c284068382f0c20e954"
-  integrity sha512-Z2RwiujPRGluePM6j699ktJYxmPpJKCfpGA13jz2hmFZC7gKetzrWvg5KN3+OsIFmydGyZ1AVwERCq1w/ZZwRg==
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.0.tgz#5f4c1d1e748d30cd73ad2944b3577a81b081e8c2"
+  integrity sha512-qjtRgnIVmOfnKUE3NJAQEdk+lKrxfw8t5ke7SXtfMTHcjsBfOfWXCQfdb30zfDoZQ2IRSIiidmjtbHZPZ++Ihw==
   dependencies:
     is-glob "^4.0.1"
 
@@ -4742,9 +4742,9 @@ minimist@~0.0.1:
   integrity sha1-3j+YVD2/lggr5IrRoMfNqDYwHc8=
 
 minipass@^2.2.1, minipass@^2.6.0, minipass@^2.6.4:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.6.5.tgz#1c245f9f2897f70fd4a219066261ce6c29f80b18"
-  integrity sha512-ewSKOPFH9blOLXx0YSE+mbrNMBFPS+11a2b03QZ+P4LVrUHW/GAlqeYC7DBknDyMWkHzrzTpDhUvy7MUxqyrPA==
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.8.1.tgz#a73bdc84cad62e8e6c8d56eba1302a5fe04c5910"
+  integrity sha512-QCG523ParRcE2+9A6wYh9UI3uy2FFLw4DQaVYQrY5HPfszc5M6VDD+j0QCwHm19LI2imes4RB+NBD8cOJccyCg==
   dependencies:
     safe-buffer "^5.1.2"
     yallist "^3.0.0"
@@ -5616,14 +5616,14 @@ react-native@0.60.5:
     whatwg-fetch "^3.0.0"
 
 react-navigation-drawer@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-2.2.1.tgz#00bc5a9fcd80a519834f2db8a37aba9fc7f99d8b"
-  integrity sha512-FfGG27CGd2zimBYwICyURNpFkP5ggHNfgYLUnWZDo4FnpmPPFTPeYsEmfKeITD0Mg334CI23CLW8HSCuq5Mszw==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-2.2.2.tgz#f77431e8dcf46e3f69aa201bb7c37979d2df03c9"
+  integrity sha512-KcFH7RRzT1XuREkTbNMCqfy7nK7yenzpGKvqp1dTvAE+DIyHHpf+Po959lsmITlt/njQBn+QxvdX1FZ9we3lNA==
 
 react-navigation@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-4.0.6.tgz#6e0c4324c8eb314f31b510a43cbf7cea9410f246"
-  integrity sha512-DEhAcuiPI+I8pEgKStVrhDjZA5bc/1Nc+ByKWPn1pVWJCRHs+i+vJ6D2KWZCUtpzKCSm/yVPyUab4hOCg8L+Ww==
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-4.0.7.tgz#cc7ce334fef009242494d623e50e9cf79eb63ddd"
+  integrity sha512-0tTWanq870Hyr1VGHuj98+myRHNQnKgpRgjgzhAwVuLShyPIB9OnoLGIwIcqEdxgxGo+JMFmIGg8KCr7xapfgg==
   dependencies:
     "@react-navigation/core" "^3.5.1"
     "@react-navigation/native" "^3.6.2"

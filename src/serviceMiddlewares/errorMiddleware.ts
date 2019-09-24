@@ -1,6 +1,5 @@
 import { Service, WeatherReply } from '../service/service';
 import { Dispatch } from 'redux';
-import { newError } from '../redux/errorActions';
 
 class ErrorMiddleware implements Service {
     public next: Service;
@@ -13,10 +12,11 @@ class ErrorMiddleware implements Service {
 
     public async getWeather(city: string): Promise<WeatherReply> {
         try {
-            return await this.next.getWeather(city);
+            const weather = await this.next.getWeather(city);
+            console.log('error', weather);
+            return weather;
         } catch (e) {
             console.log(e);
-            throw e;
         }
     }
 }
