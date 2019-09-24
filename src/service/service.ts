@@ -17,9 +17,7 @@ export class WeatherReply {
         //     throw new Error('WeatherReply should be an array');
         // }
         const weatherArray: WeatherType[] = [];
-        for (const maybeWeather of maybe) {
-            weatherArray.push(WeatherType.fromJSON(maybeWeather));
-        }
+        weatherArray.push(WeatherType.fromJSON(maybe));
         return new WeatherReply(weatherArray);
     }
     public data: WeatherType[];

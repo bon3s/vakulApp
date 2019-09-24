@@ -4,8 +4,8 @@ export class WeatherType {
             throw new Error('weatherType should be of type object');
         }
 
-        const lon = maybe.coords.lon;
-        const lat = maybe.coords.lat;
+        const lon = maybe.coord.lon;
+        const lat = maybe.coord.lat;
         const main = maybe.weather[0].main;
         const id = maybe.weather[0].id;
         const description = maybe.weather[0].description;
@@ -20,7 +20,7 @@ export class WeatherType {
             throw new Error('weatherType longitude should be of type number');
         }
         if (typeof lat !== 'number') {
-            throw new Error('weatherType longitude should be of type number');
+            throw new Error('weatherType latitude should be of type number');
         }
         if (typeof main !== 'string') {
             throw new Error('weatherType main should be of type string');

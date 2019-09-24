@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { SafeAreaView } from 'react-native';
 import MainRouter from './src/router/MainRouter';
-import { NavigationScreenProps } from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 import service from './src/service/service';
+import {
+    NavigationScreenConfigProps,
+    NavigationScreenProp,
+} from 'react-navigation';
+import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 console.disableYellowBox = true;
-interface Props extends NavigationScreenProps {}
+interface Props extends NavigationDrawerScreenProps {}
 
 export class App extends Component<Props> {
     constructor(props: Props) {
@@ -13,9 +17,12 @@ export class App extends Component<Props> {
     }
 
     componentDidMount() {
-        service.getWeather('Osijek').then(res => {
-            console.log('iz app', res);
-        });
+        service
+            .getWeather('Osijek')
+            .then(res => {
+                console.log('iz app', res);
+            })
+            .catch(e => console.log(e));
     }
 
     render() {

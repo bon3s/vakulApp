@@ -25,10 +25,14 @@ class CacheMiddleware implements Service {
                 const weatherReply = await getFromAsyncStorage(
                     '@cache/weather'
                 );
-                console.log(e);
-                return WeatherReply.fromJSON(weatherReply.data);
+                if (weatherReply) {
+                    return WeatherReply.fromJSON(weatherReply.data);
+                } else {
+                    throw new Error('no data');
+                }
             } catch (e) {
                 console.log(e);
+                throw e;
             }
         }
     }

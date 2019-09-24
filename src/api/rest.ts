@@ -59,11 +59,17 @@ class REST implements Service {
 
     public async getWeather(city: string): Promise<WeatherReply> {
         const res = await this.request(this.getWeather, {
-            method: 'POST',
+            method: 'GET',
             url: this.url.path() + city + '&APPID=' + this.url.apiAccess(),
-            data: {},
         });
-        return WeatherReply.fromJSON(res.data.result.weather);
+
+        try {
+            const weatherReply = await WeatherReply.fromJSON(res.data);
+            return weatherReply;
+        } catch (e) {
+            console.log('ovdjeee', e);
+            throw e;
+        }
     }
 
     private request(
