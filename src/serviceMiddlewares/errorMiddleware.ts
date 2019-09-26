@@ -13,7 +13,6 @@ class ErrorMiddleware implements Service {
     public async getWeather(city: string): Promise<WeatherReply> {
         try {
             const weather = await this.next.getWeather(city);
-            console.log('error', weather);
             return weather;
         } catch (e) {
             console.log(e);

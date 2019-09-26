@@ -1,41 +1,45 @@
 import React, { Component } from 'react';
-import { SafeAreaView } from 'react-native';
-import MainRouter from './src/router/MainRouter';
-import LinearGradient from 'react-native-linear-gradient';
 import service from './src/service/service';
-import {
-    NavigationScreenConfigProps,
-    NavigationScreenProp,
-} from 'react-navigation';
 import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
-console.disableYellowBox = true;
-interface Props extends NavigationDrawerScreenProps {}
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { setWeatherItem } from './src/redux/weatherActions';
+import RootContainer from './src/containers/RootContainer';
+import { View } from 'react-native';
+import { AppState } from './src/redux/AppState';
 
-export class App extends Component<Props> {
+interface Props extends NavigationDrawerScreenProps {
+    dispatch: Dispatch;
+}
+interface State {
+    loading: boolean;
+}
+
+class App extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
+        this.state = {
+            loading: false,
+        };
     }
 
     componentDidMount() {
         service
             .getWeather('Osijek')
             .then(res => {
-                console.log('iz app', res);
+                this.props.dispatch(setWeatherItem(res.data[0]));
             })
             .catch(e => console.log(e));
     }
 
-    render() {
-        return (
-            <SafeAreaView style={{ flex: 1 }}>
-                <LinearGradient
-                    style={{ flex: 1 }}
-                    colors={['#fff', '#A1BBC7', '#27576B']}>
-                    <MainRouter />
-                </LinearGradient>
-            </SafeAreaView>
-        );
+    public render() {
+        if (!this.state.loading) return <RootContainer></RootContainer>;
+        else return <View />;
     }
 }
 
-export default App;
+const mapStateToProps = (state: AppState) => ({
+    loading: state.loading,
+});
+
+export default connect(mapStateToProps)(App);

@@ -1,4 +1,4 @@
-export class WeatherType {
+export default class WeatherType {
     public static fromJSON(maybe: any): WeatherType {
         if (!maybe) {
             throw new Error('weatherType should be of type object');
@@ -15,6 +15,8 @@ export class WeatherType {
         const humidity = maybe.main.humidity;
         const tempMin = maybe.main.temp_min;
         const tempMax = maybe.main.temp_max;
+        const name = maybe.name;
+        const windSpeed = maybe.wind.speed;
 
         if (typeof lon !== 'number') {
             throw new Error('weatherType longitude should be of type number');
@@ -49,6 +51,12 @@ export class WeatherType {
         if (typeof tempMax !== 'number') {
             throw new Error('weatherType tempMax should be of type number');
         }
+        if (typeof name !== 'string') {
+            throw new Error('weatherType name should be of type string');
+        }
+        if (typeof windSpeed !== 'number') {
+            throw new Error('weatherType windSpeed should be of type number');
+        }
 
         return new WeatherType(
             lon,
@@ -61,7 +69,9 @@ export class WeatherType {
             pressure,
             humidity,
             tempMin,
-            tempMax
+            tempMax,
+            name,
+            windSpeed
         );
     }
 
@@ -76,6 +86,8 @@ export class WeatherType {
     public humidity: number;
     public tempMin: number;
     public tempMax: number;
+    public name: string;
+    public windSpeed: number;
 
     constructor(
         lon: number,
@@ -88,7 +100,9 @@ export class WeatherType {
         pressure: number,
         humidity: number,
         tempMin: number,
-        tempMax: number
+        tempMax: number,
+        name: string,
+        windSpeed: number
     ) {
         this.id = id;
         this.lon = lon;
@@ -101,5 +115,7 @@ export class WeatherType {
         this.humidity = humidity;
         this.tempMin = tempMin;
         this.tempMax = tempMax;
+        this.name = name;
+        this.windSpeed = windSpeed;
     }
 }

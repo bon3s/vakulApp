@@ -1,4 +1,4 @@
-import { WeatherType } from './weatherType';
+import WeatherType from './weatherType';
 import config from '../config';
 import client from '../http/client';
 import REST, { URL } from '../api/rest';

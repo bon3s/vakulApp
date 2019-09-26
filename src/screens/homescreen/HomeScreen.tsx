@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import HeaderWithMenuButton from '../headers/HeaderWithMenuButton';
-import { NavigationScreenProps } from 'react-navigation';
 import WeatherPanel from './WeatherPanel';
+import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
+import WeatherType from '../../service/weatherType';
 
 interface State {
     loading: boolean;
 }
 
-interface Props extends NavigationScreenProps {
+interface Props extends NavigationDrawerScreenProps {
     handleMenuPress: () => void;
+    weatherData: WeatherType[];
 }
 
 class HomeScreen extends Component<Props, State> {
@@ -25,10 +27,9 @@ class HomeScreen extends Component<Props, State> {
                 <HeaderWithMenuButton
                     handleMenuPress={this.props.handleMenuPress}
                     currentPage={this.props.navigation.state.routeName}
-                    navigation={this.props.navigation}
                 />
                 <View style={style.container}>
-                    <WeatherPanel />
+                    <WeatherPanel weatherData={this.props.weatherData[0]} />
                 </View>
             </SafeAreaView>
         );

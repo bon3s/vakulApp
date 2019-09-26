@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import HomeScreen from '../screens/homescreen/HomeScreen';
-import { NavigationScreenProps } from 'react-navigation';
+import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
+import { connect } from 'react-redux';
+import { AppState } from '../redux/AppState';
+import WeatherType from '../service/weatherType';
 
-interface Props extends NavigationScreenProps {}
+interface Props extends NavigationDrawerScreenProps {
+    weatherData: WeatherType[];
+}
 
 class HomeScreenContainer extends Component<Props> {
     public handleMenuPress = () => {
@@ -12,6 +17,7 @@ class HomeScreenContainer extends Component<Props> {
     public render() {
         return (
             <HomeScreen
+                weatherData={this.props.weatherData}
                 handleMenuPress={this.handleMenuPress}
                 {...this.props}
             />
@@ -19,4 +25,8 @@ class HomeScreenContainer extends Component<Props> {
     }
 }
 
-export default HomeScreenContainer;
+const mapStateToProps = (state: AppState) => ({
+    weatherData: state.weather.citiesArray,
+});
+
+export default connect(mapStateToProps)(HomeScreenContainer);

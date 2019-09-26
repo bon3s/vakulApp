@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import SettingsScreen from '../screens/settingsscreen/SettingsScreen';
-import { NavigationScreenProps } from 'react-navigation';
+import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 
-interface Props extends NavigationScreenProps {}
+interface Props extends NavigationDrawerScreenProps {}
 
 class SettingsScreenContainer extends Component<Props> {
+    constructor(props: Props) {
+        super(props);
+    }
     public handleMenuPress = () => {
         this.props.navigation.openDrawer();
     };
