@@ -8,7 +8,7 @@ import ErrorMiddleware from '../serviceMiddlewares/errorMiddleware';
 import LoadingMiddleware from '../serviceMiddlewares/loadingMiddleware';
 
 export interface Service {
-    getWeather(city: string): Promise<WeatherReply>;
+    getWeather(city: string, country?: string): Promise<WeatherReply>;
 }
 
 export class WeatherReply {

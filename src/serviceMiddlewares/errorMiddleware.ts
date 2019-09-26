@@ -10,9 +10,12 @@ class ErrorMiddleware implements Service {
         this.dispatch = dispatch;
     }
 
-    public async getWeather(city: string): Promise<WeatherReply> {
+    public async getWeather(
+        city: string,
+        country?: string
+    ): Promise<WeatherReply> {
         try {
-            const weather = await this.next.getWeather(city);
+            const weather = await this.next.getWeather(city, country);
             return weather;
         } catch (e) {
             console.log(e);

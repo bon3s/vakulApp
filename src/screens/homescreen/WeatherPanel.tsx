@@ -78,7 +78,8 @@ export default class WeatherPanel extends Component<Props, State> {
                                     Min. temp:
                                 </Text>
                                 <Text style={style.otherInfoText}>
-                                    {this.props.weatherData.tempMin} °C
+                                    {Math.floor(this.props.weatherData.tempMin)}{' '}
+                                    °C
                                 </Text>
                             </View>
                             <View style={style.otherInfoItem}>
@@ -86,7 +87,8 @@ export default class WeatherPanel extends Component<Props, State> {
                                     Max. temp:
                                 </Text>
                                 <Text style={style.otherInfoText}>
-                                    {this.props.weatherData.tempMax} °C
+                                    {Math.floor(this.props.weatherData.tempMax)}{' '}
+                                    °C
                                 </Text>
                             </View>
                             <View style={style.otherInfoItem}>

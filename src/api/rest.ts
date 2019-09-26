@@ -57,12 +57,16 @@ class REST implements Service {
         this.url = url;
     }
 
-    public async getWeather(city: string): Promise<WeatherReply> {
+    public async getWeather(
+        city: string,
+        country?: string
+    ): Promise<WeatherReply> {
         const res = await this.request(this.getWeather, {
             method: 'GET',
             url:
                 this.url.path() +
                 city +
+                (country !== '' && country !== undefined ? country : '') +
                 '&APPID=' +
                 this.url.apiAccess() +
                 '&units=metric',

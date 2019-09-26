@@ -11,10 +11,13 @@ class LoadingMiddleware implements Service {
         this.dispatch = dispatch;
     }
 
-    public async getWeather(city: string): Promise<WeatherReply> {
+    public async getWeather(
+        city: string,
+        country?: string
+    ): Promise<WeatherReply> {
         this.dispatch(startLoading('getWeather'));
         try {
-            const result = await this.next.getWeather(city);
+            const result = await this.next.getWeather(city, country);
             this.dispatch(stopLoading('getWeather'));
             return result;
         } catch (e) {
