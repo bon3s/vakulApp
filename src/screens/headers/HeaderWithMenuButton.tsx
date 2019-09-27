@@ -4,11 +4,11 @@ import { Text, StyleSheet, View, SafeAreaView } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { NavigationScreenProps } from 'react-navigation';
-import fonts from '../common/fonts';
-import { colors } from '../common/colors';
+import fonts from '../../assets/fonts';
+import { colors } from '../../assets/colors';
+import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 
-interface Props extends NavigationScreenProps {
+interface Props extends NavigationDrawerScreenProps {
     handleMenuPress: () => void;
     currentPage: string;
 }

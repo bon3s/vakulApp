@@ -6,8 +6,8 @@ import SettingsItem from './SettingsItem';
 import WeatherType from '../../service/weatherType';
 import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { colors } from '../common/colors';
-import fonts from '../common/fonts';
+import { colors } from '../../assets/colors';
+import fonts from '../../assets/fonts';
 import SettingsModal from './SettingsModal';
 
 interface State {
@@ -47,6 +47,9 @@ class SettingsScreen extends Component<Props, State> {
         return (
             <SafeAreaView>
                 <HeaderWithMenuButton
+                    theme={this.props.theme}
+                    navigation={this.props.navigation}
+                    screenProps={this.props.screenProps}
                     handleMenuPress={this.props.handleMenuPress}
                     currentPage={this.props.navigation.state.routeName}
                 />

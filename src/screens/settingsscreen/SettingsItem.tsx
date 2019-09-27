@@ -8,8 +8,8 @@ import {
     TouchableWithoutFeedback,
     TouchableHighlight,
 } from 'react-native';
-import fonts from '../common/fonts';
-import { colors } from '../common/colors';
+import fonts from '../../assets/fonts';
+import { colors } from '../../assets/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 

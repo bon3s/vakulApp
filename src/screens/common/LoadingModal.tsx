@@ -3,7 +3,7 @@ import { Modal, ActivityIndicator, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/AppState';
 import { State as LoadingState } from '../../redux/loadingReducer';
-import { colors } from './colors';
+import { colors } from '../../assets/colors';
 
 interface Props {
     readonly loadingState: LoadingState;

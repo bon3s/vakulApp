@@ -24,7 +24,7 @@ class App extends Component<Props, State> {
     }
 
     async componentDidMount() {
-        console.log(this.getAllFromStorage());
+        this.getAllFromStorage();
     }
 
     async getAllFromStorage() {
@@ -37,7 +37,7 @@ class App extends Component<Props, State> {
                     (err, stores) => {
                         stores.forEach((result, i, store) => {
                             this.props.dispatch(
-                                setWeatherItem(JSON.parse(store[0][1]).data[0])
+                                setWeatherItem(JSON.parse(store[i][1]).data[0])
                             );
                         });
                     }

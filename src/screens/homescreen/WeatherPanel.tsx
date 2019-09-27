@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import WeatherType from '../../service/weatherType';
 import WeatherIcon from './WeatherIcon';
-import fonts from '../common/fonts';
-import { colors } from '../common/colors';
+import fonts from '../../assets/fonts';
+import { colors } from '../../assets/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 

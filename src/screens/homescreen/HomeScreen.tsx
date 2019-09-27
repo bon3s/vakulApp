@@ -4,8 +4,8 @@ import HeaderWithMenuButton from '../headers/HeaderWithMenuButton';
 import WeatherPanel from './WeatherPanel';
 import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 import WeatherType from '../../service/weatherType';
-import fonts from '../common/fonts';
-import { colors } from '../common/colors';
+import fonts from '../../assets/fonts';
+import { colors } from '../../assets/colors';
 
 interface State {
     loading: boolean;
@@ -28,6 +28,9 @@ class HomeScreen extends Component<Props, State> {
             return (
                 <SafeAreaView style={{ flex: 1 }}>
                     <HeaderWithMenuButton
+                        theme={this.props.theme}
+                        navigation={this.props.navigation}
+                        screenProps={this.props.screenProps}
                         handleMenuPress={this.props.handleMenuPress}
                         currentPage={this.props.navigation.state.routeName}
                     />
@@ -40,6 +43,9 @@ class HomeScreen extends Component<Props, State> {
             return (
                 <SafeAreaView style={{ flex: 1 }}>
                     <HeaderWithMenuButton
+                        theme={this.props.theme}
+                        navigation={this.props.navigation}
+                        screenProps={this.props.screenProps}
                         handleMenuPress={this.props.handleMenuPress}
                         currentPage={this.props.navigation.state.routeName}
                     />

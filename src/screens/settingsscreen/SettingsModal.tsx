@@ -7,8 +7,8 @@ import {
     Text,
     TouchableOpacity,
 } from 'react-native';
-import fonts from '../common/fonts';
-import { colors } from '../common/colors';
+import fonts from '../../assets/fonts';
+import { colors } from '../../assets/colors';
 
 interface Props {
     visible: boolean;
