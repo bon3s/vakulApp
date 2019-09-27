@@ -17,6 +17,7 @@ export default class WeatherType {
         const tempMax = maybe.main.temp_max;
         const name = maybe.name;
         const windSpeed = maybe.wind.speed;
+        const country = maybe.sys.country;
 
         if (typeof lon !== 'number') {
             throw new Error('weatherType longitude should be of type number');
@@ -57,6 +58,9 @@ export default class WeatherType {
         if (typeof windSpeed !== 'number') {
             throw new Error('weatherType windSpeed should be of type number');
         }
+        if (typeof country !== 'string') {
+            throw new Error('weatherType country should be of type string');
+        }
 
         return new WeatherType(
             lon,
@@ -71,7 +75,8 @@ export default class WeatherType {
             tempMin,
             tempMax,
             name,
-            windSpeed
+            windSpeed,
+            country
         );
     }
 
@@ -88,6 +93,7 @@ export default class WeatherType {
     public tempMax: number;
     public name: string;
     public windSpeed: number;
+    public country: string;
 
     constructor(
         lon: number,
@@ -102,7 +108,8 @@ export default class WeatherType {
         tempMin: number,
         tempMax: number,
         name: string,
-        windSpeed: number
+        windSpeed: number,
+        country: string
     ) {
         this.id = id;
         this.lon = lon;
@@ -117,5 +124,6 @@ export default class WeatherType {
         this.tempMax = tempMax;
         this.name = name;
         this.windSpeed = windSpeed;
+        this.country = country;
     }
 }

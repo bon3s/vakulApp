@@ -6,6 +6,7 @@ import fonts from '../common/fonts';
 import { colors } from '../common/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
+
 interface Props {
     weatherData: WeatherType;
 }
@@ -26,18 +27,20 @@ export default class WeatherPanel extends Component<Props, State> {
         if (this.props.weatherData) {
             return (
                 <View style={style.weatherPanel}>
-                    <Text style={style.panelCity}>
-                        {this.props.weatherData.name}
-                    </Text>
-                    <View style={style.weatherIconWrapper}>
-                        <WeatherIcon
-                            nightMode={false}
-                            iconCode={
-                                this.props.weatherData.icon
-                            }></WeatherIcon>
-                        <Text style={style.weatherStatus}>
-                            {this.props.weatherData.description}
+                    <View>
+                        <Text style={style.panelCity}>
+                            {this.props.weatherData.name}
                         </Text>
+                        <View style={style.weatherIconWrapper}>
+                            <WeatherIcon
+                                nightMode={false}
+                                iconCode={
+                                    this.props.weatherData.icon
+                                }></WeatherIcon>
+                            <Text style={style.weatherStatus}>
+                                {this.props.weatherData.description}
+                            </Text>
+                        </View>
                     </View>
                     <View style={style.weatherInfo}>
                         <View style={style.weatherColumnLeft}>
@@ -122,6 +125,8 @@ const style = StyleSheet.create({
         padding: 12,
         borderRadius: 8,
         backgroundColor: '#fff',
+        flex: 1,
+        justifyContent: 'space-evenly',
     },
     weatherPanelNight: {
         padding: 12,

@@ -8,7 +8,7 @@ export const setWeatherItem = (value: WeatherType) => ({
     value,
 });
 
-export const removeWeatherItem = (name: string) => ({
+export const removeWeatherItem = (value: string) => ({
     type: REMOVE_WEATHER_ITEM,
-    name,
+    value,
 });

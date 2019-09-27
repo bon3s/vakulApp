@@ -66,12 +66,11 @@ class REST implements Service {
             url:
                 this.url.path() +
                 city +
-                (country !== '' && country !== undefined ? country : '') +
+                (country !== '' && country !== undefined ? ',' + country : '') +
                 '&APPID=' +
                 this.url.apiAccess() +
                 '&units=metric',
         });
-        console.log(res);
 
         try {
             const weatherReply = await WeatherReply.fromJSON(res.data);

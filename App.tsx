@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import service from './src/service/service';
 import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { setWeatherItem } from './src/redux/weatherActions';
 import RootContainer from './src/containers/RootContainer';
-import { View } from 'react-native';
-import { AppState } from './src/redux/AppState';
+import { SafeAreaView, AsyncStorage } from 'react-native';
+import LoadingModal from './src/screens/common/LoadingModal';
+import { getFromAsyncStorage } from './src/asyncStorage/asyncStorage';
+import { setWeatherItem } from './src/redux/weatherActions';
 
 interface Props extends NavigationDrawerScreenProps {
     dispatch: Dispatch;
@@ -23,23 +23,47 @@ class App extends Component<Props, State> {
         };
     }
 
-    componentDidMount() {
-        service
-            .getWeather('Osijek')
-            .then(res => {
-                this.props.dispatch(setWeatherItem(res.data[0]));
-            })
-            .catch(e => console.log(e));
+    async componentDidMount() {
+        console.log(this.getAllFromStorage());
     }
 
-    public render() {
-        if (!this.state.loading) return <RootContainer></RootContainer>;
-        else return <View />;
+    async getAllFromStorage() {
+        try {
+            const keys = await AsyncStorage.getAllKeys();
+            let itemsArray;
+            if (keys.length !== 0) {
+                itemsArray = await AsyncStorage.multiGet(
+                    keys,
+                    (err, stores) => {
+                        stores.forEach((result, i, store) => {
+                            this.props.dispatch(
+                                setWeatherItem(JSON.parse(store[0][1]).data[0])
+                            );
+                        });
+                    }
+                );
+                return itemsArray;
+            } else {
+                return;
+            }
+        } catch (error) {
+            console.log(error, 'error');
+        }
+    }
+
+    render() {
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+                <LoadingModal>
+                    <RootContainer
+                        screenProps={this.props.screenProps}
+                        navigation={this.props.navigation}
+                        theme={this.props.theme}
+                    />
+                </LoadingModal>
+            </SafeAreaView>
+        );
     }
 }
 
-const mapStateToProps = (state: AppState) => ({
-    loading: state.loading,
-});
-
-export default connect(mapStateToProps)(App);
+export default connect()(App);

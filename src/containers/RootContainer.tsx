@@ -3,8 +3,15 @@ import { Component } from 'react';
 import { SafeAreaView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import MainRouter from '../router/MainRouter';
+import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 
-export default class RootContainer extends Component {
+interface Props extends NavigationDrawerScreenProps {}
+
+export default class RootContainer extends Component<Props> {
+    constructor(props: Props) {
+        super(props);
+    }
+
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>

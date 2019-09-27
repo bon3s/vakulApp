@@ -6,6 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import { NavigationScreenProps } from 'react-navigation';
 import fonts from '../common/fonts';
+import { colors } from '../common/colors';
 
 interface Props extends NavigationScreenProps {
     handleMenuPress: () => void;
@@ -61,7 +62,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 15,
         paddingHorizontal: 10,
-        backgroundColor: '#6E91A1',
+        backgroundColor: colors.primary,
         justifyContent: 'center',
         alignItems: 'center',
     },

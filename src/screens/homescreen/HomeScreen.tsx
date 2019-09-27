@@ -4,6 +4,8 @@ import HeaderWithMenuButton from '../headers/HeaderWithMenuButton';
 import WeatherPanel from './WeatherPanel';
 import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 import WeatherType from '../../service/weatherType';
+import fonts from '../common/fonts';
+import { colors } from '../common/colors';
 
 interface State {
     loading: boolean;
@@ -22,23 +24,47 @@ class HomeScreen extends Component<Props, State> {
         };
     }
     render() {
-        return (
-            <SafeAreaView style={{ flex: 1 }}>
-                <HeaderWithMenuButton
-                    handleMenuPress={this.props.handleMenuPress}
-                    currentPage={this.props.navigation.state.routeName}
-                />
-                <View style={style.container}>
-                    <WeatherPanel weatherData={this.props.weatherData[0]} />
-                </View>
-            </SafeAreaView>
-        );
+        if (this.props.weatherData.length !== 0) {
+            return (
+                <SafeAreaView style={{ flex: 1 }}>
+                    <HeaderWithMenuButton
+                        handleMenuPress={this.props.handleMenuPress}
+                        currentPage={this.props.navigation.state.routeName}
+                    />
+                    <View style={style.container}>
+                        <WeatherPanel weatherData={this.props.weatherData[0]} />
+                    </View>
+                </SafeAreaView>
+            );
+        } else {
+            return (
+                <SafeAreaView style={{ flex: 1 }}>
+                    <HeaderWithMenuButton
+                        handleMenuPress={this.props.handleMenuPress}
+                        currentPage={this.props.navigation.state.routeName}
+                    />
+                    <View style={style.container}>
+                        <Text style={style.warning}>
+                            Please add a location in the settings screen.
+                        </Text>
+                    </View>
+                </SafeAreaView>
+            );
+        }
     }
 }
 
 const style = StyleSheet.create({
     container: {
         padding: 12,
+        flex: 1,
+    },
+    warning: {
+        marginTop: 30,
+        textAlign: 'center',
+        fontFamily: fonts.fontRegular,
+        fontSize: 20,
+        color: colors.primary,
     },
 });
 
