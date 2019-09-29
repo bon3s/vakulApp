@@ -71,7 +71,6 @@ class REST implements Service {
                 this.url.apiAccess() +
                 '&units=metric',
         });
-
         try {
             const weatherReply = await WeatherReply.fromJSON(res.data);
             return weatherReply;

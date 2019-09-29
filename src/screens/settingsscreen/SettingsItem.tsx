@@ -6,7 +6,6 @@ import {
     Text,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    TouchableHighlight,
 } from 'react-native';
 import fonts from '../../assets/fonts';
 import { colors } from '../../assets/colors';
@@ -16,6 +15,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 interface Props {
     weatherData: WeatherType;
     handleDeleteItem: (city: string) => void;
+    handleSettingsItemPress: (city: string) => void;
 }
 interface State {
     longpressed: boolean;
@@ -53,63 +53,75 @@ class SettingsItem extends Component<Props, State> {
 
     render() {
         return (
-            <TouchableOpacity
-                onLongPress={this.handleLongPress}
-                style={style.weatherItem}>
-                {this.state.longpressed ? (
-                    <TouchableWithoutFeedback
-                        onPress={() =>
-                            this.props.handleDeleteItem(
-                                this.props.weatherData.name
-                            )
-                        }
-                        style={style.deleteIcon}>
-                        <MaterialCommunityIcons
-                            style={style.deleteIcon}
-                            name={'close-circle'}
-                            size={25}
-                        />
-                    </TouchableWithoutFeedback>
-                ) : null}
-                <View style={style.itemWrapper}>
-                    <View style={style.city}>
-                        <Entypo
-                            style={style.location}
-                            name={'location-pin'}
-                            size={30}
-                        />
-                        <Text style={style.cityName}>
-                            {this.props.weatherData.name},
-                            {this.props.weatherData.country}
-                        </Text>
+            <View style={style.itemFrame}>
+                <TouchableOpacity
+                    onLongPress={this.handleLongPress}
+                    onPress={() =>
+                        this.props.handleSettingsItemPress(
+                            this.props.weatherData.name
+                        )
+                    }
+                    style={style.weatherItem}>
+                    {this.state.longpressed ? (
+                        <TouchableWithoutFeedback
+                            onPress={() =>
+                                this.props.handleDeleteItem(
+                                    this.props.weatherData.name
+                                )
+                            }
+                            style={style.deleteIcon}>
+                            <MaterialCommunityIcons
+                                style={style.deleteIcon}
+                                name={'close-circle'}
+                                size={25}
+                            />
+                        </TouchableWithoutFeedback>
+                    ) : null}
+                    <View style={style.itemWrapper}>
+                        <View style={style.city}>
+                            <Entypo
+                                style={style.location}
+                                name={'location-pin'}
+                                size={30}
+                            />
+                            <Text style={style.cityName}>
+                                {this.props.weatherData.name},
+                                {this.props.weatherData.country}
+                            </Text>
+                        </View>
+                        <View style={style.itemExcerpt}>
+                            <Text style={style.temperature}>
+                                temp: {Math.floor(this.props.weatherData.temp)}
+                                °C
+                            </Text>
+                            <Text style={style.description}>
+                                {this.props.weatherData.description}
+                            </Text>
+                        </View>
                     </View>
-                    <View style={style.itemExcerpt}>
-                        <Text style={style.temperature}>
-                            temp: {Math.floor(this.props.weatherData.temp)}°C
-                        </Text>
-                        <Text style={style.description}>
-                            {this.props.weatherData.description}
-                        </Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         );
     }
 }
 
 const style = StyleSheet.create({
+    itemFrame: {
+        paddingTop: 5,
+        position: 'relative',
+    },
     weatherItem: {
         paddingHorizontal: 10,
         paddingVertical: 20,
         borderRadius: 8,
         backgroundColor: '#FFFFFF',
-        position: 'relative',
         marginBottom: 15,
+        overflow: 'visible',
     },
     deleteIcon: {
         position: 'absolute',
-        top: -5,
-        right: -5,
+        top: -8,
+        right: -2,
         color: colors.textColor,
         elevation: 12,
         zIndex: 12,

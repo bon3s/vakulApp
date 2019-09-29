@@ -4,6 +4,8 @@ import {
     setToAsyncStorage,
     getFromAsyncStorage,
 } from '../asyncStorage/asyncStorage';
+import { newError } from '../redux/errorActions';
+import moment from 'moment';
 
 class CacheMiddleware implements Service {
     public next: Service;
@@ -20,8 +22,14 @@ class CacheMiddleware implements Service {
     ): Promise<WeatherReply> {
         try {
             const weather = await this.next.getWeather(city, country);
-            setToAsyncStorage(weather, '@cache/weather/' + city);
-            return weather;
+            const currentTime = moment();
+            const timeStampedWeather = {
+                weather: weather,
+                time: currentTime,
+            };
+
+            setToAsyncStorage(timeStampedWeather, '@cache/weather/' + city);
+            return timeStampedWeather.weather;
         } catch (e) {
             try {
                 const weatherReply = await getFromAsyncStorage(
@@ -33,7 +41,7 @@ class CacheMiddleware implements Service {
                     throw new Error('no data');
                 }
             } catch (e) {
-                console.log(e);
+                this.dispatch(newError(e));
                 throw e;
             }
         }

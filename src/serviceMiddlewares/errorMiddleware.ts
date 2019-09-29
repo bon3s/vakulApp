@@ -1,5 +1,6 @@
 import { Service, WeatherReply } from '../service/service';
 import { Dispatch } from 'redux';
+import { newError } from '../redux/errorActions';
 
 class ErrorMiddleware implements Service {
     public next: Service;
@@ -18,7 +19,7 @@ class ErrorMiddleware implements Service {
             const weather = await this.next.getWeather(city, country);
             return weather;
         } catch (e) {
-            console.log(e);
+            this.dispatch(newError(e));
         }
     }
 }

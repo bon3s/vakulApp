@@ -3,24 +3,33 @@ import { RouterProps } from 'react-router';
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 import HeaderWithMenuButton from '../headers/HeaderWithMenuButton';
 import SettingsItem from './SettingsItem';
-import WeatherType from '../../service/weatherType';
+import WeatherType from '../../service/WeatherType';
 import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../../assets/colors';
 import fonts from '../../assets/fonts';
 import SettingsModal from './SettingsModal';
+import ErrorModal from '../common/ErrorModal';
+import { Dispatch } from 'redux';
+import { WeatherWithTimestamp } from '../../redux/weatherReducer';
 
 interface State {
     loading: boolean;
-    modalVisible: boolean;
 }
 
 interface Props extends NavigationDrawerScreenProps {
     handleMenuPress: () => void;
     handleDeleteItem: (city: string) => void;
     handleAddItem: (city: string) => void;
-    weatherData: WeatherType[];
+    closeErrorModal: () => void;
+    toggleModal: () => void;
+    handleSettingsItemPress: (city: string) => void;
+    notFoundPrompt: boolean;
+    modalVisible: boolean;
+    errorModalVisible: boolean;
+    weatherData: WeatherWithTimestamp[];
     warningPrompt: boolean;
+    dispatch: Dispatch;
 }
 
 class SettingsScreen extends Component<Props, State> {
@@ -28,20 +37,10 @@ class SettingsScreen extends Component<Props, State> {
         super(props);
         this.state = {
             loading: false,
-            modalVisible: false,
         };
     }
-    public toggleModal = () => {
-        if (this.state.modalVisible) {
-            this.setState({
-                modalVisible: false,
-            });
-        } else {
-            this.setState({
-                modalVisible: true,
-            });
-        }
-    };
+
+    public order = Object.keys(this.props.weatherData);
 
     render() {
         return (
@@ -53,35 +52,73 @@ class SettingsScreen extends Component<Props, State> {
                     handleMenuPress={this.props.handleMenuPress}
                     currentPage={this.props.navigation.state.routeName}
                 />
-                <View style={style.container}>
-                    {this.props.weatherData.map((item, index) => {
-                        return (
-                            <SettingsItem
-                                key={item.name}
-                                weatherData={this.props.weatherData[index]}
-                                handleDeleteItem={
-                                    this.props.handleDeleteItem
-                                }></SettingsItem>
-                        );
-                    })}
-                    {this.props.weatherData.length !== 0 ? (
-                        <Text style={style.infoText}>
-                            Longpress any location to edit it.
-                        </Text>
-                    ) : (
-                        <View></View>
-                    )}
-                    <View style={style.bottom}>
-                        <TouchableOpacity onPress={() => this.toggleModal()}>
-                            <Text style={style.buttonText}>Add Location</Text>
-                        </TouchableOpacity>
+
+                <ScrollView bounces={false} style={style.container}>
+                    <View style={{ paddingBottom: 100 }}>
+                        {this.props.weatherData.map((item, index) => {
+                            return (
+                                <SettingsItem
+                                    handleSettingsItemPress={
+                                        this.props.handleSettingsItemPress
+                                    }
+                                    key={item.city.name}
+                                    weatherData={
+                                        this.props.weatherData[index].city
+                                    }
+                                    handleDeleteItem={
+                                        this.props.handleDeleteItem
+                                    }></SettingsItem>
+                            );
+                        })}
+                        {/* <SortableListView
+                            style={{ flex: 1 }}
+                            data={this.props.weatherData}
+                            order={this.order}
+                            onRowMoved={e => {
+                                this.order.splice(
+                                    e.to,
+                                    0,
+                                    this.order.splice(e.from, 1)[0]
+                                );
+                                this.forceUpdate();
+                            }}
+                            renderRow={row => (
+                                <SettingsItem
+                                    handleDeleteItem={
+                                        this.props.handleDeleteItem
+                                    }
+                                    weatherData={row}
+                                />
+                            )}
+                        /> */}
+                        {this.props.weatherData.length !== 0 ? (
+                            <Text style={style.infoText}>
+                                Longpress any location to edit it.
+                            </Text>
+                        ) : (
+                            <View></View>
+                        )}
+                        <View style={style.bottom}>
+                            <TouchableOpacity
+                                onPress={() => this.props.toggleModal()}>
+                                <Text style={style.buttonText}>
+                                    Add Location
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
                 <SettingsModal
+                    notFoundPrompt={this.props.notFoundPrompt}
                     warningPrompt={this.props.warningPrompt}
                     handleAddItem={this.props.handleAddItem}
-                    visible={this.state.modalVisible}
-                    toggleModal={this.toggleModal}
+                    visible={this.props.modalVisible}
+                    toggleModal={this.props.toggleModal}
+                />
+                <ErrorModal
+                    visible={this.props.errorModalVisible}
+                    message={'No city was found. Please try again.'}
+                    closeModal={this.props.closeErrorModal}
                 />
             </SafeAreaView>
         );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
-import WeatherType from '../../service/weatherType';
+import WeatherType from '../../service/WeatherType';
 import WeatherIcon from './WeatherIcon';
 import fonts from '../../assets/fonts';
 import { colors } from '../../assets/colors';

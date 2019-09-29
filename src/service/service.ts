@@ -1,4 +1,3 @@
-import WeatherType from './weatherType';
 import config from '../config';
 import client from '../http/client';
 import REST, { URL } from '../api/rest';
@@ -6,6 +5,7 @@ import store from '../store';
 import CacheMiddleware from '../serviceMiddlewares/cacheMiddleware';
 import ErrorMiddleware from '../serviceMiddlewares/errorMiddleware';
 import LoadingMiddleware from '../serviceMiddlewares/loadingMiddleware';
+import WeatherType from './weatherType';
 
 export interface Service {
     getWeather(city: string, country?: string): Promise<WeatherReply>;

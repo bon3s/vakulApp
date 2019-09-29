@@ -3,11 +3,11 @@ import HomeScreen from '../screens/homescreen/HomeScreen';
 import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import { AppState } from '../redux/AppState';
-import WeatherType from '../service/weatherType';
 import { Dispatch } from 'redux';
+import { WeatherWithTimestamp } from '../redux/weatherReducer';
 
 interface Props extends NavigationDrawerScreenProps {
-    weatherData: WeatherType[];
+    weatherData: WeatherWithTimestamp[];
     dispatch: Dispatch;
 }
 

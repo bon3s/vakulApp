@@ -13,6 +13,7 @@ import { colors } from '../../assets/colors';
 interface Props {
     visible: boolean;
     warningPrompt: boolean;
+    notFoundPrompt: boolean;
     toggleModal: () => void;
     handleAddItem: (city: string) => void;
 }
@@ -35,10 +36,10 @@ class SettingsModal extends Component<Props, State> {
                 animationType={'slide'}
                 transparent={true}
                 visible={this.props.visible}
-                onRequestClose={this.props.toggleModal}>
+                onRequestClose={() => this.props.toggleModal()}>
                 <TouchableOpacity
                     style={style.backdrop}
-                    onPress={this.props.toggleModal}>
+                    onPress={() => this.props.toggleModal()}>
                     <View style={style.modalWrapper}>
                         <View pointerEvents={'none'}>
                             <Text style={style.modalText}>
@@ -58,6 +59,11 @@ class SettingsModal extends Component<Props, State> {
                                 This city is already added.
                             </Text>
                         ) : null}
+                        {this.props.notFoundPrompt ? (
+                            <Text style={style.warning}>
+                                No city was found, please try again.
+                            </Text>
+                        ) : null}
                         <TouchableOpacity
                             style={style.button}
                             disabled={
@@ -66,10 +72,11 @@ class SettingsModal extends Component<Props, State> {
                                     ? false
                                     : true
                             }
-                            onPress={() => {
+                            onPress={e => {
+                                e.stopPropagation();
                                 this.props.handleAddItem(this.state.inputText);
-                                this.props.toggleModal();
                                 this.setState({ inputText: '' });
+                                this.props.toggleModal();
                             }}>
                             <Text style={style.buttonText}>Add Location</Text>
                         </TouchableOpacity>
@@ -106,7 +113,7 @@ const style = StyleSheet.create({
         marginTop: 10,
         textAlign: 'center',
         fontFamily: fonts.fontRegular,
-        fontSize: 20,
+        fontSize: 12,
         color: colors.textColor,
     },
     button: {

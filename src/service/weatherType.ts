@@ -18,6 +18,8 @@ export default class WeatherType {
         const name = maybe.name;
         const windSpeed = maybe.wind.speed;
         const country = maybe.sys.country;
+        const sunrise = maybe.sys.sunrise;
+        const sunset = maybe.sys.sunset;
 
         if (typeof lon !== 'number') {
             throw new Error('weatherType longitude should be of type number');
@@ -61,6 +63,12 @@ export default class WeatherType {
         if (typeof country !== 'string') {
             throw new Error('weatherType country should be of type string');
         }
+        if (typeof sunrise !== 'number') {
+            throw new Error('weatherType sunrise should be of type number');
+        }
+        if (typeof sunset !== 'number') {
+            throw new Error('weatherType sunset should be of type number');
+        }
 
         return new WeatherType(
             lon,
@@ -76,7 +84,9 @@ export default class WeatherType {
             tempMax,
             name,
             windSpeed,
-            country
+            country,
+            sunrise,
+            sunset
         );
     }
 
@@ -94,6 +104,8 @@ export default class WeatherType {
     public name: string;
     public windSpeed: number;
     public country: string;
+    public sunrise: number;
+    public sunset: number;
 
     constructor(
         lon: number,
@@ -109,7 +121,9 @@ export default class WeatherType {
         tempMax: number,
         name: string,
         windSpeed: number,
-        country: string
+        country: string,
+        sunrise: number,
+        sunset: number
     ) {
         this.id = id;
         this.lon = lon;
@@ -125,5 +139,7 @@ export default class WeatherType {
         this.name = name;
         this.windSpeed = windSpeed;
         this.country = country;
+        this.sunrise = sunrise;
+        this.sunset = sunset;
     }
 }

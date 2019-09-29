@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import HeaderWithMenuButton from '../headers/HeaderWithMenuButton';
 import WeatherPanel from './WeatherPanel';
 import { NavigationDrawerScreenProps } from 'react-navigation-drawer';
-import WeatherType from '../../service/weatherType';
 import fonts from '../../assets/fonts';
 import { colors } from '../../assets/colors';
+import Carousel from 'react-native-snap-carousel';
+import { WeatherWithTimestamp } from '../../redux/weatherReducer';
 
 interface State {
     loading: boolean;
@@ -13,15 +14,17 @@ interface State {
 
 interface Props extends NavigationDrawerScreenProps {
     handleMenuPress: () => void;
-    weatherData: WeatherType[];
+    weatherData: WeatherWithTimestamp[];
 }
 
 class HomeScreen extends Component<Props, State> {
+    public carouselRef;
     constructor(props: Props) {
         super(props);
         this.state = {
             loading: false,
         };
+        this.carouselRef = React.createRef();
     }
     render() {
         if (this.props.weatherData.length !== 0) {
@@ -35,7 +38,25 @@ class HomeScreen extends Component<Props, State> {
                         currentPage={this.props.navigation.state.routeName}
                     />
                     <View style={style.container}>
-                        <WeatherPanel weatherData={this.props.weatherData[0]} />
+                        <Carousel
+                            layout={'default'}
+                            style={style.carousel}
+                            data={this.props.weatherData}
+                            loop={true}
+                            activeSlideAlignment={'start'}
+                            renderItem={(item, index) => {
+                                return (
+                                    <WeatherPanel
+                                        weatherData={item.item.city}
+                                    />
+                                );
+                            }}
+                            sliderWidth={Dimensions.get('window').width}
+                            itemWidth={Dimensions.get('window').width - 24}
+                            ref={c => {
+                                this.carouselRef = c;
+                            }}
+                        />
                     </View>
                 </SafeAreaView>
             );
@@ -72,6 +93,7 @@ const style = StyleSheet.create({
         fontSize: 20,
         color: colors.primary,
     },
+    carousel: {},
 });
 
 export default HomeScreen;
