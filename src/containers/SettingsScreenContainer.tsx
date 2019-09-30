@@ -111,9 +111,10 @@ class SettingsScreenContainer extends Component<Props, State> {
         }
     };
 
-    public handleSettingsItemPress(city: string) {
-        console.log(this.props.navigation);
-    }
+    public handleSettingsItemPress = (city: string) => {
+        console.log('šress');
+        this.props.navigation.navigate('HomeScreenContainer', { city: city });
+    };
 
     public render() {
         return (

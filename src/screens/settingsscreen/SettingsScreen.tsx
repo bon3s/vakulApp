@@ -12,6 +12,7 @@ import SettingsModal from './SettingsModal';
 import ErrorModal from '../common/ErrorModal';
 import { Dispatch } from 'redux';
 import { WeatherWithTimestamp } from '../../redux/weatherReducer';
+import SortableListView from 'react-native-sortable-listview';
 
 interface State {
     loading: boolean;
@@ -39,10 +40,14 @@ class SettingsScreen extends Component<Props, State> {
             loading: false,
         };
     }
-
-    public order = Object.keys(this.props.weatherData);
+    public data = [];
+    public order = Object.keys(this.data);
 
     render() {
+        this.props.weatherData.forEach(item => {
+            this.data.push(item.city);
+        });
+
         return (
             <SafeAreaView>
                 <HeaderWithMenuButton
@@ -70,9 +75,10 @@ class SettingsScreen extends Component<Props, State> {
                                     }></SettingsItem>
                             );
                         })}
+
                         {/* <SortableListView
                             style={{ flex: 1 }}
-                            data={this.props.weatherData}
+                            data={this.data}
                             order={this.order}
                             onRowMoved={e => {
                                 this.order.splice(
@@ -82,15 +88,24 @@ class SettingsScreen extends Component<Props, State> {
                                 );
                                 this.forceUpdate();
                             }}
-                            renderRow={row => (
-                                <SettingsItem
-                                    handleDeleteItem={
-                                        this.props.handleDeleteItem
-                                    }
-                                    weatherData={row}
-                                />
-                            )}
+                            renderRow={row => {
+                                console.log(row);
+                                return (
+                                    <SettingsItem
+                                        handleSettingsItemPress={
+                                            this.props.handleSettingsItemPress
+                                        }
+                                        key={row.city.name}
+                                        weatherData={
+                                            this.props.weatherData[row].city
+                                        }
+                                        handleDeleteItem={
+                                            this.props.handleDeleteItem
+                                        }></SettingsItem>
+                                );
+                            }}
                         /> */}
+
                         {this.props.weatherData.length !== 0 ? (
                             <Text style={style.infoText}>
                                 Longpress any location to edit it.

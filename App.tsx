@@ -29,29 +29,27 @@ class App extends Component<Props, State> {
     }
 
     async componentDidMount() {
-        this.checkIfUpToDate();
+        this.getAllFromStorage();
         setInterval(() => {
             this.checkIfUpToDate();
-        }, 9000);
+        }, 930000);
     }
 
     private async checkIfUpToDate() {
-        const getAsync = await this.getAllFromStorage();
-        if (getAsync !== undefined) {
-            this.props.weatherData.forEach(item => {
-                if (
-                    moment(item.timestamp).isBefore(
-                        moment().subtract(15, 'minutes')
-                    )
-                ) {
-                    this.props.dispatch(removeWeatherItem(item.city.name));
-                    AsyncStorage.removeItem('@cache/weather/' + item.city.name);
-                    this.callService(item.city.name);
-                } else {
-                    return;
-                }
-            });
-        }
+        this.props.weatherData.forEach(item => {
+            console.log(moment(item.timestamp).isBefore(moment()));
+            if (
+                moment(item.timestamp).isBefore(
+                    moment().subtract(15, 'minutes')
+                ) == true
+            ) {
+                this.props.dispatch(removeWeatherItem(item.city.name));
+                AsyncStorage.removeItem('@cache/weather/' + item.city.name);
+                this.callService(item.city.name);
+            } else {
+                return;
+            }
+        });
     }
 
     private async callService(city: string) {
