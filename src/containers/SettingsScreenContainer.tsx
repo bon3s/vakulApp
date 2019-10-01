@@ -9,12 +9,11 @@ import service from '../service/service';
 import { AsyncStorage } from 'react-native';
 import { WeatherWithTimestamp } from '../redux/weatherReducer';
 import moment from 'moment';
-import NetInfo from '@react-native-community/netinfo';
-import { checkConnectivity } from '../screens/common/CheckConnectivity';
 
 interface Props extends NavigationDrawerScreenProps {
     weatherData: WeatherWithTimestamp[];
     dispatch: Dispatch;
+    connected: boolean;
 }
 
 interface State {
@@ -37,13 +36,23 @@ class SettingsScreenContainer extends Component<Props, State> {
         };
     }
 
-    componentDidMount() {
-        if (checkConnectivity()) {
-            this.setState({ addButtonDisabled: true });
-        } else {
-            this.setState({ addButtonDisabled: false });
+    componentDidUpdate(previousProps, previousState) {
+        if (previousProps.connected !== this.props.connected) {
+            this.checkConnectivity();
         }
     }
+
+    componentDidMount() {
+        this.checkConnectivity();
+    }
+
+    public checkConnectivity = () => {
+        if (this.props.connected) {
+            this.setState({ addButtonDisabled: false });
+        } else {
+            this.setState({ addButtonDisabled: true });
+        }
+    };
 
     public toggleModal = () => {
         if (this.state.modalVisible) {
@@ -150,6 +159,7 @@ class SettingsScreenContainer extends Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
     weatherData: state.weather.citiesArray,
+    connected: state.connectivity.connected,
 });
 
 export default connect(mapStateToProps)(SettingsScreenContainer);

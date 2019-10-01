@@ -37,7 +37,7 @@ class ErrorModal extends Component<Props> {
                         <TouchableOpacity
                             style={style.button}
                             disabled={false}
-                            onPress={this.props.closeModal}>
+                            onPress={() => this.props.closeModal}>
                             <Text style={style.buttonText}>OK</Text>
                         </TouchableOpacity>
                     </View>
@@ -58,7 +58,7 @@ const style = StyleSheet.create({
         elevation: 5,
     },
     backdrop: {
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: 'rgba(0,0,0,0.7)',
         flexGrow: 1,
         width: '100%',
         height: '100%',

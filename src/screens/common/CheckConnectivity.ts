@@ -1,8 +1,16 @@
 import NetInfo from '@react-native-community/netinfo';
+import { Dispatch } from 'redux';
+import { setConnectionStatus } from '../../redux/connectivityActions';
 
-export function checkConnectivity() {
-    const status = NetInfo.fetch().then(state => {
-        state.isConnected ? true : false;
+interface Props {
+    dispatch: Dispatch;
+}
+
+export default function checkConnectivityFunc(p: Props) {
+    NetInfo.addEventListener(state => {
+        console.log(state);
+        state.isConnected
+            ? p.dispatch(setConnectionStatus(true))
+            : p.dispatch(setConnectionStatus(false));
     });
-    return status;
 }

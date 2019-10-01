@@ -8,7 +8,6 @@ import { colors } from '../../assets/colors';
 import Carousel from 'react-native-snap-carousel';
 import { WeatherWithTimestamp } from '../../redux/weatherReducer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { isTemplateElement } from '@babel/types';
 
 interface State {
     loading: boolean;
@@ -21,7 +20,6 @@ interface Props extends NavigationDrawerScreenProps {
 
 class HomeScreen extends Component<Props, State> {
     public carouselRef;
-    public scrollIndexArray = [];
 
     constructor(props: Props) {
         super(props);
@@ -64,23 +62,6 @@ class HomeScreen extends Component<Props, State> {
                             style={style.carousel}
                             data={this.props.weatherData}
                             loop={true}
-                            // onLayout={() => {
-                            //     let temp = null;
-                            //     this.carouselRef.props.data.forEach(
-                            //         (element, index) => {
-                            //             if (
-                            //                 element.city.name ==
-                            //                 this.props.navigation.state.params
-                            //                     .city
-                            //             ) {
-                            //                 temp = index;
-                            //             }
-                            //         }
-                            //     );
-                            //     if (temp !== null) {
-                            //         this.carouselRef.snapToItem(temp);
-                            //     }
-                            // }}
                             activeSlideAlignment={'start'}
                             renderItem={item => {
                                 return (
