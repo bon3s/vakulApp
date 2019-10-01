@@ -8,6 +8,7 @@ import { colors } from '../../assets/colors';
 import Carousel from 'react-native-snap-carousel';
 import { WeatherWithTimestamp } from '../../redux/weatherReducer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import moment from 'moment';
 
 interface State {
     loading: boolean;
@@ -66,6 +67,14 @@ class HomeScreen extends Component<Props, State> {
                             renderItem={item => {
                                 return (
                                     <WeatherPanel
+                                        nightMode={
+                                            moment().isBetween(
+                                                item.item.sunrise,
+                                                item.item.sunset
+                                            )
+                                                ? false
+                                                : true
+                                        }
                                         weatherData={item.item.city}
                                     />
                                 );

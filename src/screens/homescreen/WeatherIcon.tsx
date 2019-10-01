@@ -45,14 +45,14 @@ const handleIconDay = (iconCode: string) => {
 const handleIconNight = (iconCode: string) => {
     const clearSkyNight = require('../../assets/img/icons/36.png');
     const fewCloudsNight = require('../../assets/img/icons/39.png');
-    const scatteredCloudsNight = require('../../assets/img/icons/42.png');
+    const scatteredCloudsNight = require('../../assets/img/icons/42n.png');
     const brokenCloudsNight = require('../../assets/img/icons/25.png');
-    const showerRainNight = require('../../assets/img/icons/33.png');
+    const showerRainNight = require('../../assets/img/icons/33n.png');
     const rainNight = require('../../assets/img/icons/28.png');
-    const thunderStormNight = require('../../assets/img/icons/20.png');
+    const thunderStormNight = require('../../assets/img/icons/20n.png');
     const snowNight = require('../../assets/img/icons/22.png');
-    const mistNight = require('../../assets/img/icons/29.png');
-    const undefinedWeather = require('../../assets/img/icons/11.png');
+    const mistNight = require('../../assets/img/icons/29n.png');
+    const undefinedWeather = require('../../assets/img/icons/11n.png');
 
     switch (iconCode) {
         case '01n':

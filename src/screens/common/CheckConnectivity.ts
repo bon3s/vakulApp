@@ -8,7 +8,6 @@ interface Props {
 
 export default function checkConnectivityFunc(p: Props) {
     NetInfo.addEventListener(state => {
-        console.log(state);
         state.isConnected
             ? p.dispatch(setConnectionStatus(true))
             : p.dispatch(setConnectionStatus(false));

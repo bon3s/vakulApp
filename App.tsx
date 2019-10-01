@@ -59,13 +59,14 @@ class App extends Component<Props, State> {
             this.setState({ connErrorModalVisible: true });
         }
         this.getAllFromStorage();
-        await this.checkIfUpToDate();
+        this.checkIfUpToDate();
     }
 
-    componentDidUpdate(previousProps, previousState) {
+    async componentDidUpdate(previousProps, previousState) {
         if (previousProps.connected !== this.props.connected) {
             this.checkConnectivity();
         }
+        this.checkIfUpToDate();
     }
 
     public closeModal = () => {
@@ -82,6 +83,7 @@ class App extends Component<Props, State> {
 
     private async checkIfUpToDate() {
         this.props.weatherData.forEach(item => {
+            console.log(item, moment(item.timestamp));
             if (
                 moment(item.timestamp).isBefore(
                     moment().subtract(15, 'minutes')
