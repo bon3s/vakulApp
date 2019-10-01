@@ -11,6 +11,8 @@ import { WeatherWithTimestamp } from './src/redux/weatherReducer';
 import { AppState } from './src/redux/AppState';
 import moment from 'moment';
 import service from './src/service/service';
+import ErrorModal from './src/screens/common/ErrorModal';
+import { checkConnectivity } from './src/screens/common/CheckConnectivity';
 
 interface Props extends NavigationDrawerScreenProps {
     dispatch: Dispatch;
@@ -18,6 +20,7 @@ interface Props extends NavigationDrawerScreenProps {
 }
 interface State {
     loading: boolean;
+    connErrorModalVisible: boolean;
 }
 
 class App extends Component<Props, State> {
@@ -25,19 +28,27 @@ class App extends Component<Props, State> {
         super(props);
         this.state = {
             loading: false,
+            connErrorModalVisible: false,
         };
     }
 
     async componentDidMount() {
         this.getAllFromStorage();
         setInterval(() => {
-            this.checkIfUpToDate();
+            if (checkConnectivity()) {
+                this.checkIfUpToDate();
+            } else {
+                this.setState({ connErrorModalVisible: true });
+            }
         }, 930000);
+    }
+
+    public closeModal() {
+        this.setState({ connErrorModalVisible: false });
     }
 
     private async checkIfUpToDate() {
         this.props.weatherData.forEach(item => {
-            console.log(moment(item.timestamp).isBefore(moment()));
             if (
                 moment(item.timestamp).isBefore(
                     moment().subtract(15, 'minutes')
@@ -112,6 +123,12 @@ class App extends Component<Props, State> {
                         theme={this.props.theme}
                     />
                 </LoadingModal>
+                <ErrorModal
+                    closeModal={this.closeModal}
+                    visible={this.state.connErrorModalVisible}
+                    message={
+                        'Your device is offline. You can currently see the last available weather data.'
+                    }></ErrorModal>
             </SafeAreaView>
         );
     }

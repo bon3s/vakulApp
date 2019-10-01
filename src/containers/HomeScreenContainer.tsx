@@ -15,7 +15,6 @@ class HomeScreenContainer extends Component<Props> {
     public handleMenuPress = () => {
         this.props.navigation.openDrawer();
     };
-
     public render() {
         return (
             <HomeScreen

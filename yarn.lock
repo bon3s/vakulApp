@@ -924,6 +924,11 @@
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
 
+"@react-native-community/netinfo@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-4.3.0.tgz#0fec726ad6e8af381942844f885a2edbbdf05740"
+  integrity sha512-bYlmjb5muMO1ag5Zzk95OjjxPWFVG1Nrr1x/I95/b99llgoFa3JZSSnlxxAMek2W+c/iknT13oyKfFpQbXysFQ==
+
 "@react-navigation/core@^3.5.1":
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.5.1.tgz#7a2339fca3496979305fb3a8ab88c2ca8d8c214d"
@@ -1054,10 +1059,10 @@
     "@types/prop-types" "*"
     "@types/react" "*"
 
-"@types/react-navigation@^3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-3.0.8.tgz#770d5217a4795fe8526e2a69cc6ccb8600c911e4"
-  integrity sha512-r8UQvBmOz7XjPE8AHTHh0SThGqModhQtSsntkmob7rczhueJIqDwBOgsEn54SJa25XzD/KBlelAWeVZ7+Ggm8A==
+"@types/react-navigation@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-3.0.0.tgz#21480bf5fa690237b7e2877c214a3c09908a928a"
+  integrity sha512-hw5N+4gvOeUMWpM+1abufdiqJfsJmpCDA5po9cjwylUJx8XOJi9lZTAmEi4AMb3D7BxMmdU/nh+exE/fiyswXA==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"

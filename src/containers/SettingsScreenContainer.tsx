@@ -9,6 +9,8 @@ import service from '../service/service';
 import { AsyncStorage } from 'react-native';
 import { WeatherWithTimestamp } from '../redux/weatherReducer';
 import moment from 'moment';
+import NetInfo from '@react-native-community/netinfo';
+import { checkConnectivity } from '../screens/common/CheckConnectivity';
 
 interface Props extends NavigationDrawerScreenProps {
     weatherData: WeatherWithTimestamp[];
@@ -20,6 +22,7 @@ interface State {
     showAlreadyExistsPrompt: boolean;
     showNotFoundPrompt: boolean;
     errorModalVisible: boolean;
+    addButtonDisabled: boolean;
 }
 
 class SettingsScreenContainer extends Component<Props, State> {
@@ -30,7 +33,16 @@ class SettingsScreenContainer extends Component<Props, State> {
             errorModalVisible: false,
             showAlreadyExistsPrompt: false,
             showNotFoundPrompt: false,
+            addButtonDisabled: false,
         };
+    }
+
+    componentDidMount() {
+        if (checkConnectivity()) {
+            this.setState({ addButtonDisabled: true });
+        } else {
+            this.setState({ addButtonDisabled: false });
+        }
     }
 
     public toggleModal = () => {
@@ -112,13 +124,13 @@ class SettingsScreenContainer extends Component<Props, State> {
     };
 
     public handleSettingsItemPress = (city: string) => {
-        console.log('šress');
-        this.props.navigation.navigate('HomeScreenContainer', { city: city });
+        this.props.navigation.navigate('VakulApp', { city: city });
     };
 
     public render() {
         return (
             <SettingsScreen
+                addButtonDisabled={this.state.addButtonDisabled}
                 handleSettingsItemPress={this.handleSettingsItemPress}
                 notFoundPrompt={this.state.showNotFoundPrompt}
                 modalVisible={this.state.modalVisible}

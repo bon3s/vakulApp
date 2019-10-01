@@ -31,6 +31,7 @@ interface Props extends NavigationDrawerScreenProps {
     weatherData: WeatherWithTimestamp[];
     warningPrompt: boolean;
     dispatch: Dispatch;
+    addButtonDisabled: boolean;
 }
 
 class SettingsScreen extends Component<Props, State> {
@@ -115,7 +116,8 @@ class SettingsScreen extends Component<Props, State> {
                         )}
                         <View style={style.bottom}>
                             <TouchableOpacity
-                                onPress={() => this.props.toggleModal()}>
+                                onPress={() => this.props.toggleModal()}
+                                disabled={this.props.addButtonDisabled}>
                                 <Text style={style.buttonText}>
                                     Add Location
                                 </Text>

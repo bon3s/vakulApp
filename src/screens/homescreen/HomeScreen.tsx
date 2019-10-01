@@ -7,6 +7,8 @@ import fonts from '../../assets/fonts';
 import { colors } from '../../assets/colors';
 import Carousel from 'react-native-snap-carousel';
 import { WeatherWithTimestamp } from '../../redux/weatherReducer';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { isTemplateElement } from '@babel/types';
 
 interface State {
     loading: boolean;
@@ -19,6 +21,8 @@ interface Props extends NavigationDrawerScreenProps {
 
 class HomeScreen extends Component<Props, State> {
     public carouselRef;
+    public scrollIndexArray = [];
+
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -26,6 +30,23 @@ class HomeScreen extends Component<Props, State> {
         };
         this.carouselRef = React.createRef();
     }
+
+    componentDidUpdate() {
+        let temp = null;
+        if (this.carouselRef.props.data !== undefined) {
+            this.carouselRef.props.data.forEach((element, index) => {
+                if (
+                    element.city.name == this.props.navigation.state.params.city
+                ) {
+                    temp = index;
+                }
+            });
+        }
+        if (temp !== null) {
+            this.carouselRef.snapToItem(temp);
+        }
+    }
+
     render() {
         if (this.props.weatherData.length !== 0) {
             return (
@@ -43,8 +64,25 @@ class HomeScreen extends Component<Props, State> {
                             style={style.carousel}
                             data={this.props.weatherData}
                             loop={true}
+                            // onLayout={() => {
+                            //     let temp = null;
+                            //     this.carouselRef.props.data.forEach(
+                            //         (element, index) => {
+                            //             if (
+                            //                 element.city.name ==
+                            //                 this.props.navigation.state.params
+                            //                     .city
+                            //             ) {
+                            //                 temp = index;
+                            //             }
+                            //         }
+                            //     );
+                            //     if (temp !== null) {
+                            //         this.carouselRef.snapToItem(temp);
+                            //     }
+                            // }}
                             activeSlideAlignment={'start'}
-                            renderItem={(item, index) => {
+                            renderItem={item => {
                                 return (
                                     <WeatherPanel
                                         weatherData={item.item.city}
@@ -74,6 +112,12 @@ class HomeScreen extends Component<Props, State> {
                         <Text style={style.warning}>
                             Please add a location in the settings screen.
                         </Text>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.navigate('Settings');
+                            }}>
+                            <Text style={style.buttonText}>Settings</Text>
+                        </TouchableOpacity>
                     </View>
                 </SafeAreaView>
             );
@@ -94,6 +138,16 @@ const style = StyleSheet.create({
         color: colors.primary,
     },
     carousel: {},
+    buttonText: {
+        alignSelf: 'center',
+        marginTop: 15,
+        padding: 15,
+        textAlign: 'center',
+        backgroundColor: colors.primary,
+        color: '#fff',
+        fontFamily: fonts.fontMedium,
+        borderRadius: 8,
+    },
 });
 
 export default HomeScreen;

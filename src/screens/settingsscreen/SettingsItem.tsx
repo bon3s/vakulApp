@@ -36,10 +36,6 @@ class SettingsItem extends Component<Props, State> {
         this.handleTimeout();
     };
 
-    public handleShortPress = () => {
-        this.setState({ longpressed: false });
-    };
-
     public handleTimeout = () => {
         const timeout = setTimeout(() => {
             if (this.state.longpressed) {
@@ -56,11 +52,12 @@ class SettingsItem extends Component<Props, State> {
             <View style={style.itemFrame}>
                 <TouchableOpacity
                     onLongPress={this.handleLongPress}
-                    onPress={() =>
+                    onPress={() => {
+                        this.setState({ longpressed: false });
                         this.props.handleSettingsItemPress(
                             this.props.weatherData.name
-                        )
-                    }
+                        );
+                    }}
                     style={style.weatherItem}>
                     {this.state.longpressed ? (
                         <TouchableWithoutFeedback
