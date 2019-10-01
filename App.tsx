@@ -60,13 +60,6 @@ class App extends Component<Props, State> {
         }
         this.getAllFromStorage();
         await this.checkIfUpToDate();
-        setInterval(() => {
-            if (this.props.connected) {
-                this.checkIfUpToDate();
-            } else {
-                this.setState({ connErrorModalVisible: true });
-            }
-        }, 930000);
     }
 
     componentDidUpdate(previousProps, previousState) {
