@@ -16,6 +16,7 @@ import checkConnectivityFunc from './src/screens/common/CheckConnectivity';
 const BackgroundTask = require('react-native-background-task');
 
 BackgroundTask.define(async () => {
+    console.log('updated');
     this.props.weatherData.forEach(item => {
         if (
             moment(item.timestamp).isBefore(moment().subtract(15, 'minutes')) ==
@@ -29,7 +30,6 @@ BackgroundTask.define(async () => {
         }
     });
 
-    // Remember to call finish()
     BackgroundTask.finish();
 });
 
@@ -53,7 +53,7 @@ class App extends Component<Props, State> {
     }
 
     async componentDidMount() {
-        BackgroundTask.schedule();
+        BackgroundTask.schedule(60);
         checkConnectivityFunc({ dispatch: this.props.dispatch });
         if (!this.props.connected) {
             this.setState({ connErrorModalVisible: true });
@@ -65,8 +65,8 @@ class App extends Component<Props, State> {
     async componentDidUpdate(previousProps, previousState) {
         if (previousProps.connected !== this.props.connected) {
             this.checkConnectivity();
+            this.checkIfUpToDate();
         }
-        this.checkIfUpToDate();
     }
 
     public closeModal = () => {
@@ -89,6 +89,7 @@ class App extends Component<Props, State> {
                     moment().subtract(15, 'minutes')
                 ) == true
             ) {
+                console.log(item);
                 this.props.dispatch(removeWeatherItem(item.city.name));
                 AsyncStorage.removeItem('@cache/weather/' + item.city.name);
                 this.callService(item.city.name);

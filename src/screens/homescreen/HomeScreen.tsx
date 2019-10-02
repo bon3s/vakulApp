@@ -65,16 +65,21 @@ class HomeScreen extends Component<Props, State> {
                             loop={true}
                             activeSlideAlignment={'start'}
                             renderItem={item => {
+                                const now = moment();
+                                const nightStart = moment(
+                                    item.item.sunset,
+                                    'YYYY-MM-DD HH:mm:ss'
+                                );
+                                const nightEnd = moment(
+                                    item.item.sunrise,
+                                    'YYYY-MM-DD HH:mm:ss'
+                                );
                                 return (
                                     <WeatherPanel
-                                        nightMode={
-                                            moment().isBetween(
-                                                item.item.sunrise,
-                                                item.item.sunset
-                                            )
-                                                ? false
-                                                : true
-                                        }
+                                        nightMode={now.isBetween(
+                                            nightStart,
+                                            nightEnd
+                                        )}
                                         weatherData={item.item.city}
                                     />
                                 );
