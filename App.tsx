@@ -38,8 +38,7 @@ class App extends Component<Props, State> {
     async componentDidMount() {
         BackgroundTimer.runBackgroundTimer(() => {
             this.checkIfUpToDate();
-            console.log('updated');
-        }, 10000);
+        }, 930000);
 
         checkConnectivityFunc({ dispatch: this.props.dispatch });
         if (!this.props.connected) {
