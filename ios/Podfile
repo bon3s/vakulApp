@@ -29,7 +29,6 @@ target 'weatherapp' do
 
 
 
-  pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
 
   target 'weatherappTests' do
     inherit! :search_paths

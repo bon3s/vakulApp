@@ -75,25 +75,42 @@ class SettingsItem extends Component<Props, State> {
                         </TouchableWithoutFeedback>
                     ) : null}
                     <View style={style.itemWrapper}>
-                        <View style={style.city}>
-                            <Entypo
-                                style={style.location}
-                                name={'location-pin'}
-                                size={30}
-                            />
-                            <Text style={style.cityName}>
-                                {this.props.weatherData.name},
-                                {this.props.weatherData.country}
-                            </Text>
+                        <View
+                            style={{
+                                flexWrap: 'wrap',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                maxWidth: '50%',
+                            }}>
+                            <View style={style.city}>
+                                <Entypo
+                                    style={style.location}
+                                    name={'location-pin'}
+                                    size={30}
+                                />
+                                <Text style={style.cityName}>
+                                    {this.props.weatherData.name},
+                                    {this.props.weatherData.country}
+                                </Text>
+                            </View>
                         </View>
-                        <View style={style.itemExcerpt}>
-                            <Text style={style.temperature}>
-                                temp: {Math.floor(this.props.weatherData.temp)}
-                                °C
-                            </Text>
-                            <Text style={style.description}>
-                                {this.props.weatherData.description}
-                            </Text>
+                        <View
+                            style={{
+                                flexWrap: 'wrap',
+                                alignItems: 'flex-end',
+                                justifyContent: 'flex-end',
+                                maxWidth: '50%',
+                            }}>
+                            <View style={style.itemExcerpt}>
+                                <Text style={style.temperature}>
+                                    temp:{' '}
+                                    {Math.floor(this.props.weatherData.temp)}
+                                    °C
+                                </Text>
+                                <Text style={style.description}>
+                                    {this.props.weatherData.description}
+                                </Text>
+                            </View>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -126,7 +143,9 @@ const style = StyleSheet.create({
     itemWrapper: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         maxWidth: '100%',
+        flex: 1,
     },
     city: {
         flexDirection: 'row',
@@ -144,17 +163,23 @@ const style = StyleSheet.create({
     },
     itemExcerpt: {
         alignItems: 'flex-end',
+        flexWrap: 'wrap',
+        flex: 1,
     },
     temperature: {
         fontFamily: fonts.fontMedium,
         fontSize: 15,
         color: colors.primary,
+        flexWrap: 'wrap',
+        textAlign: 'right',
     },
     description: {
         marginTop: 5,
         fontFamily: fonts.fontMedium,
         fontSize: 15,
         color: colors.primary,
+        flexWrap: 'wrap',
+        textAlign: 'right',
     },
 });
 

@@ -189,8 +189,6 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-background-fetch')
-    implementation project(':react-native-background-task')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
