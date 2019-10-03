@@ -102,7 +102,7 @@ class SettingsScreenContainer extends Component<Props, State> {
             .catch(e => console.log(e));
     }
 
-    public handleAddItem = (city: string) => {
+    public handleAddItem = async (city: string) => {
         if (
             city !== '' &&
             city !== undefined &&
@@ -125,10 +125,10 @@ class SettingsScreenContainer extends Component<Props, State> {
                     this.setState({ showAlreadyExistsPrompt: false });
                 }, 5000);
             } else {
-                this.callService(city);
+                await this.callService(city);
             }
         } else {
-            this.callService(city);
+            await this.callService(city);
         }
     };
 

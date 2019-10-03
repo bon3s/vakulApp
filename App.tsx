@@ -38,20 +38,21 @@ class App extends Component<Props, State> {
     async componentDidMount() {
         BackgroundTimer.runBackgroundTimer(() => {
             this.checkIfUpToDate();
-        }, 930000);
+        }, 5000);
 
         checkConnectivityFunc({ dispatch: this.props.dispatch });
+
         if (!this.props.connected) {
             this.setState({ connErrorModalVisible: true });
+        } else {
+            this.getAllFromStorage();
+            this.checkIfUpToDate();
         }
-        this.getAllFromStorage();
-        this.checkIfUpToDate();
     }
 
     async componentDidUpdate(previousProps) {
         if (previousProps.connected !== this.props.connected) {
             this.checkConnectivity();
-            this.checkIfUpToDate();
         }
     }
 
@@ -68,18 +69,24 @@ class App extends Component<Props, State> {
     };
 
     private checkIfUpToDate = async () => {
-        if (this.props.weatherData.length !== 0) {
+        if (this.props.weatherData && this.props.weatherData.length !== 0) {
             this.props.weatherData.forEach(item => {
                 if (
                     moment(item.timestamp).isBefore(
-                        moment().subtract(15, 'minutes')
+                        moment().subtract(30, 'seconds')
                     ) == true
                 ) {
+                    console.log(
+                        moment(item.timestamp, 'YYYY-MM-DD HH:mm:ss'),
+                        moment().format('YYYY-MM-DD HH:mm:ss'),
+                        moment(item.timestamp).isBefore(
+                            moment().subtract(30, 'seconds')
+                        ),
+                        item
+                    );
                     this.props.dispatch(removeWeatherItem(item.city.name));
                     AsyncStorage.removeItem('@cache/weather/' + item.city.name);
                     this.callService(item.city.name);
-                } else {
-                    return;
                 }
             });
         }
@@ -110,22 +117,27 @@ class App extends Component<Props, State> {
                 itemsArray = await AsyncStorage.multiGet(
                     keys,
                     (err, stores) => {
-                        stores.forEach((result, i, store) => {
-                            const timestamp = JSON.parse(store[i][1]).time;
-                            const data = JSON.parse(store[i][1]).weather
-                                .data[0];
-                            this.props.dispatch(
-                                setWeatherItem({
-                                    city: data,
-                                    timestamp: timestamp,
-                                })
-                            );
-                        });
+                        // stores.forEach((result, i, store) => {
+                        //     const timestamp = JSON.parse(store[i][1]).time;
+                        //     const data = JSON.parse(store[i][1]).weather
+                        //         .data[0];
+                        //     this.props.dispatch(
+                        //         setWeatherItem({
+                        //             city: data,
+                        //             timestamp: timestamp,
+                        //         })
+                        //     );
+                        // });
                     }
                 );
-                if (itemsArray !== null && itemsArray.length !== 0) {
+                if (
+                    itemsArray &&
+                    itemsArray !== null &&
+                    itemsArray.length !== 0
+                ) {
                     stopLoading('getFromAsyncStorage');
                 }
+                console.log(itemsArray);
                 return itemsArray;
             } else {
                 return;
