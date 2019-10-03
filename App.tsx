@@ -38,7 +38,7 @@ class App extends Component<Props, State> {
     async componentDidMount() {
         BackgroundTimer.runBackgroundTimer(() => {
             this.checkIfUpToDate();
-        }, 5000);
+        }, 30000);
 
         checkConnectivityFunc({ dispatch: this.props.dispatch });
 
@@ -73,23 +73,21 @@ class App extends Component<Props, State> {
             this.props.weatherData.forEach(item => {
                 if (
                     moment(item.timestamp).isBefore(
-                        moment().subtract(30, 'seconds')
+                        moment().subtract(25, 'seconds')
                     ) == true
                 ) {
-                    console.log(
-                        moment(item.timestamp, 'YYYY-MM-DD HH:mm:ss'),
-                        moment().format('YYYY-MM-DD HH:mm:ss'),
-                        moment(item.timestamp).isBefore(
-                            moment().subtract(30, 'seconds')
-                        ),
-                        item
-                    );
-                    this.props.dispatch(removeWeatherItem(item.city.name));
-                    AsyncStorage.removeItem('@cache/weather/' + item.city.name);
-                    this.callService(item.city.name);
+                    this.basicUpdate(item.city.name);
                 }
             });
         }
+    };
+
+    private basicUpdate = async item => {
+        this.props.dispatch(startLoading('UpdateItems'));
+        this.props.dispatch(removeWeatherItem(item));
+        await AsyncStorage.removeItem('@cache/weather/' + item);
+        await this.callService(item);
+        this.props.dispatch(stopLoading('UpdateItems'));
     };
 
     private async callService(city: string) {
@@ -117,17 +115,17 @@ class App extends Component<Props, State> {
                 itemsArray = await AsyncStorage.multiGet(
                     keys,
                     (err, stores) => {
-                        // stores.forEach((result, i, store) => {
-                        //     const timestamp = JSON.parse(store[i][1]).time;
-                        //     const data = JSON.parse(store[i][1]).weather
-                        //         .data[0];
-                        //     this.props.dispatch(
-                        //         setWeatherItem({
-                        //             city: data,
-                        //             timestamp: timestamp,
-                        //         })
-                        //     );
-                        // });
+                        stores.forEach((result, i, store) => {
+                            const timestamp = JSON.parse(store[i][1]).time;
+                            const data = JSON.parse(store[i][1]).weather
+                                .data[0];
+                            this.props.dispatch(
+                                setWeatherItem({
+                                    city: data,
+                                    timestamp: timestamp,
+                                })
+                            );
+                        });
                     }
                 );
                 if (

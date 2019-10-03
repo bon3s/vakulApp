@@ -21,7 +21,7 @@ interface Props extends NavigationDrawerScreenProps {
 
 class HomeScreen extends Component<Props, State> {
     public carouselRef;
-
+    public carouselProps: {};
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -31,20 +31,34 @@ class HomeScreen extends Component<Props, State> {
     }
 
     componentDidUpdate() {
-        let temp = null;
-        if (this.carouselRef.props.data !== undefined) {
-            this.carouselRef.props.data.forEach((element, index) => {
-                if (
-                    element.city.name == this.props.navigation.state.params.city
-                ) {
-                    temp = index;
-                }
-            });
-        }
-        if (temp !== null) {
-            this.carouselRef.snapToItem(temp);
+        if (this.carouselRef !== undefined && this.carouselRef !== null) {
+            this.snapToIndex();
         }
     }
+
+    private snapToIndex = () => {
+        if (this.props !== null) {
+            try {
+                let temp = null;
+                const carouselProps = this.carouselRef.props;
+                if (carouselProps && carouselProps.data !== undefined) {
+                    carouselProps.data.forEach((element, index) => {
+                        if (
+                            element.city.name ==
+                            this.props.navigation.state.params.city
+                        ) {
+                            temp = index;
+                        }
+                    });
+                }
+                if (temp !== null) {
+                    this.carouselRef.snapToItem(temp);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    };
 
     render() {
         if (this.props.weatherData.length !== 0) {
