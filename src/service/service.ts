@@ -13,9 +13,6 @@ export interface Service {
 
 export class WeatherReply {
     public static fromJSON(maybe: any): WeatherReply {
-        if (!Array.isArray(maybe)) {
-            throw new Error('WeatherReply should be an array');
-        }
         const weatherArray: WeatherType[] = [];
         weatherArray.push(WeatherType.fromJSON(maybe));
         return new WeatherReply(weatherArray);
