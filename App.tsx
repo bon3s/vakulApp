@@ -38,7 +38,7 @@ class App extends Component<Props, State> {
     async componentDidMount() {
         BackgroundTimer.runBackgroundTimer(() => {
             this.checkIfUpToDate();
-        }, 30000);
+        }, 930000);
 
         checkConnectivityFunc({ dispatch: this.props.dispatch });
 
@@ -73,7 +73,7 @@ class App extends Component<Props, State> {
             this.props.weatherData.forEach(item => {
                 if (
                     moment(item.timestamp).isBefore(
-                        moment().subtract(25, 'seconds')
+                        moment().subtract(15, 'minutes')
                     ) == true
                 ) {
                     this.basicUpdate(item.city.name);
@@ -135,7 +135,6 @@ class App extends Component<Props, State> {
                 ) {
                     stopLoading('getFromAsyncStorage');
                 }
-                console.log(itemsArray);
                 return itemsArray;
             } else {
                 return;
