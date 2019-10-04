@@ -73,7 +73,6 @@ class REST implements Service {
         });
         try {
             const weatherReply = await WeatherReply.fromJSON(res.data);
-            console.log(weatherReply);
             return weatherReply;
         } catch (e) {
             throw e;

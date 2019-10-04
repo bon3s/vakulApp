@@ -14,6 +14,7 @@ import service from './src/service/service';
 import ErrorModal from './src/screens/common/ErrorModal';
 import checkConnectivityFunc from './src/screens/common/CheckConnectivity';
 import BackgroundTimer from 'react-native-background-timer';
+import SplashScreen from 'react-native-splash-screen';
 
 interface Props extends NavigationDrawerScreenProps {
     dispatch: Dispatch;
@@ -36,6 +37,7 @@ class App extends Component<Props, State> {
     }
 
     async componentDidMount() {
+        SplashScreen.hide();
         BackgroundTimer.runBackgroundTimer(() => {
             this.checkIfUpToDate();
         }, 930000);
